@@ -17,10 +17,12 @@ struct XRealIP(String);
 impl<'a, 'r> rocket::request::FromRequest<'a, 'r> for XRealIP {
     type Error = std::convert::Infallible;
     fn from_request(request: &'a rocket::Request<'r>) -> rocket::request::Outcome<Self, Self::Error> {
-        let ip_addr = request.client_ip();
-        // let ip_addr = request.headers().get_one("CF-Connecting-IP");
+        let ip_addr = match request.headers().get_one("CF-Connecting-IP") {
+            Some(ip_addr) => Some(ip_addr.to_string()),
+            None => request.client_ip().map(|x| x.to_string())
+        };
         match ip_addr {
-            Some(ip_addr) => rocket::Outcome::Success(XRealIP(ip_addr.to_string())),
+            Some(ip_addr) => rocket::Outcome::Success(XRealIP(ip_addr)),
             None => rocket::Outcome::Success(XRealIP("0.0.0.0".to_string()))
         }
     }
