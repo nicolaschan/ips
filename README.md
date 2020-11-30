@@ -13,7 +13,7 @@ cd ips
 cargo install diesel_cli --no-default-features --features postgres
 ```
 
-Assuming `$POSTGRES_URL` is your Postgres databese URL, which looks something like:
+Assuming `$POSTGRES_URL` is your Postgres database URL, which looks something like:
 `postgres://user:password@localhost/postgres_db_name` 
 
 Edit `Rocket.toml` to use this database URL.
