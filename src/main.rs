@@ -18,6 +18,7 @@ impl<'a, 'r> rocket::request::FromRequest<'a, 'r> for XRealIP {
     type Error = std::convert::Infallible;
     fn from_request(request: &'a rocket::Request<'r>) -> rocket::request::Outcome<Self, Self::Error> {
         let ip_addr = request.client_ip();
+        // let ip_addr = request.headers().get_one("CF-Connecting-IP");
         match ip_addr {
             Some(ip_addr) => rocket::Outcome::Success(XRealIP(ip_addr.to_string())),
             None => rocket::Outcome::Success(XRealIP("0.0.0.0".to_string()))
