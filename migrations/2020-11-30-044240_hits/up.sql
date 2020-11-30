@@ -1,0 +1,6 @@
+-- Your SQL goes here
+CREATE TABLE hits (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  ip_addr TEXT NOT NULL,
+  timestamp TIMESTAMP NOT NULL
+)
