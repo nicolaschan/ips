@@ -22,3 +22,14 @@ Edit `Rocket.toml` to use this database URL.
 diesel migration run --database-url "$POSTGRES_URL"
 cargo run --release
 ```
+
+### Development
+For testing and sketchy prod setups, run Postgres in docker:
+```
+docker run -p 5432:5432 -d -e POSTGRES_PASSWORD=adgnOl72VEspIwcZh postgres
+```
+
+Then we have
+```
+POSTGRES_URL=postgres://postgres:adgnOl72VEspIwcZh@localhost/postgres
+```
