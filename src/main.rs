@@ -5,13 +5,10 @@
 
 use crate::rocket_contrib::databases::diesel::RunQueryDsl;
 use rocket_contrib::databases::diesel;
-use crate::rocket_contrib::databases::diesel::QueryDsl;
-use crate::rocket_contrib::databases::diesel::ExpressionMethods;
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use ips::create_hit;
-use ips::models::Hit;
 use ips::models::Score;
 
 struct XRealIP(String);
@@ -41,7 +38,6 @@ fn display_scores(scores: Vec<Score>) -> String {
 #[get("/")]
 fn index(conn: HitsDbConn, ip_addr: XRealIP) -> String {
     let time = SystemTime::now().duration_since(UNIX_EPOCH).expect("Time went backwards");
-    let millis = &time.as_millis().to_string();
     create_hit(&conn, &ip_addr.0, time);
     let all_time: Vec<Score> = diesel::sql_query("
         SELECT ip_addr, COUNT(*) AS count 
