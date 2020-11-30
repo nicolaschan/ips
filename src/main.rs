@@ -6,7 +6,7 @@
 use crate::rocket_contrib::databases::diesel::RunQueryDsl;
 use rocket_contrib::databases::diesel;
 
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::SystemTime;
 
 use ips::create_hit;
 use ips::models::Score;
@@ -28,8 +28,8 @@ impl<'a, 'r> rocket::request::FromRequest<'a, 'r> for XRealIP {
     }
 }
 
-#[database("sqlite_hits")]
-struct HitsDbConn(diesel::SqliteConnection);
+#[database("postgres_hits")]
+struct HitsDbConn(diesel::PgConnection);
 
 fn display_scores(scores: Vec<Score>) -> String {
     scores.into_iter()
@@ -40,7 +40,7 @@ fn display_scores(scores: Vec<Score>) -> String {
 
 #[get("/")]
 fn index(conn: HitsDbConn, ip_addr: XRealIP) -> String {
-    let time = SystemTime::now().duration_since(UNIX_EPOCH).expect("Time went backwards");
+    let time = SystemTime::now(); // .duration_since(UNIX_EPOCH).expect("Time went backwards");
     create_hit(&conn, &ip_addr.0, time);
     let all_time: Vec<Score> = diesel::sql_query("
         SELECT ip_addr, COUNT(*) AS count 
@@ -59,7 +59,7 @@ fn index(conn: HitsDbConn, ip_addr: XRealIP) -> String {
     let past_ten_min: Vec<Score> = diesel::sql_query("
         SELECT ip_addr, COUNT(*) AS count 
         FROM hits 
-        WHERE datetime(timestamp/1000, 'unixepoch') >= datetime('now', '-10 minutes')
+        WHERE timestamp >= now() - interval '10 minutes'
         GROUP BY ip_addr
         ORDER BY count DESC
         LIMIT 10

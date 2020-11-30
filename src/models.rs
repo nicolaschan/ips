@@ -13,15 +13,13 @@ pub struct Hit {
 #[table_name="hits"]
 pub struct NewHit {
     pub ip_addr: String,
-    pub timestamp: String,
+    pub timestamp: std::time::SystemTime,
 }
 
 #[derive(Queryable, QueryableByName, Debug)]
 pub struct Score {
     #[sql_type = "Text"]
     pub ip_addr: String,
-    #[sql_type = "Integer"]
-    pub count: i32,
+    #[sql_type = "BigInt"]
+    pub count: i64,
 }
-
-

@@ -7,11 +7,11 @@ use self::diesel::prelude::*;
 pub mod schema;
 pub mod models;
 
-pub fn create_hit(conn: &SqliteConnection, ip_addr: &str, timestamp: std::time::Duration) -> usize {
+pub fn create_hit(conn: &PgConnection, ip_addr: &str, timestamp: std::time::SystemTime) -> usize {
     use schema::hits;
     let new_hit = NewHit {
         ip_addr: ip_addr.to_string(),
-        timestamp: timestamp.as_millis().to_string()
+        timestamp
     };
     diesel::insert_into(hits::table)
         .values(&new_hit)

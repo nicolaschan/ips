@@ -1,2 +1,2 @@
 [global.databases]
-sqlite_hits = { url = "hits.sqlite" }
+postgres_hits = { url = "postgres://postgres:adgnOl72VEspIwcZh@localhost/postgres" }
