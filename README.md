@@ -16,7 +16,8 @@ cargo install diesel_cli --no-default-features --features postgres
 Assuming `$POSTGRES_URL` is your Postgres database URL, which looks something like:
 `postgres://user:password@localhost/postgres_db_name` 
 
-Edit `Rocket.toml` to use this database URL.
+Edit `Rocket.toml` to use this database URL. 
+Then run the migration to create the hits table:
 
 ```
 diesel migration run --database-url "$POSTGRES_URL"
