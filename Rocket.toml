@@ -1,2 +1,2 @@
 [global.databases]
-postgres_hits = { url = "postgres://postgres:adgnOl72VEspIwcZh@localhost/postgres" }
+postgres_hits = { url = "postgres://postgres:adgnOl72VEspIwcZh@postgres/postgres" }

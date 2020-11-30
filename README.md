@@ -6,7 +6,14 @@ A more optimized rewrite of [ipscoreboard](https://github.com/neelayjunnarkar/ip
 - Rust
 - Postgres
 
-### Install
+### Run with Docker
+```bash
+git clone https://github.com/nicolaschan/ips && cd ips
+docker-compose up -d
+docker exec ips_web_1 diesel migration run --database-url postgres://postgres:adgnOl72VEspIwcZh@postgres/postgres
+```
+
+### Manual Install
 ```bash
 git clone https://github.com/nicolaschan/ips
 cd ips
