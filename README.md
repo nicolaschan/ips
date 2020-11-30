@@ -24,10 +24,12 @@ cargo run --release
 ```
 
 ### Development
-For testing and sketchy prod setups, run Postgres in docker:
+For testing and sketchy prod setups, run Postgres in Docker:
 ```
 docker run -p 5432:5432 -d -e POSTGRES_PASSWORD=adgnOl72VEspIwcZh postgres
 ```
+As is, this won't save any state once the container stops.
+To save the state when the container stops, use a bind mount (see [docker/postgres](https://hub.docker.com/_/postgres/)).
 
 Then we have
 ```
